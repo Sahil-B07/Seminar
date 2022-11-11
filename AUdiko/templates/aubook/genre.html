@@ -1,0 +1,72 @@
+{% extends 'aubook/base.html' %}
+
+{% block title %} Genress {% endblock %}
+
+{% block body %}
+
+<!-- slideShow -->
+{% for book, range, nslides in all_genres %}
+<h1 class="">{{book.0.genre}}</h1>
+<div id="carouselExampleIndicators{{forloop.counter}}" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators{{forloop.counter}}" data-bs-slide-to="0" class="active"></button>
+
+    {% for i in range %}
+    <button type="button" data-bs-target="#carouselExampleIndicators{{forloop.parentloop.counter}}" data-bs-slide-to="{{i}}"></button>
+    {% endfor %}
+  </div>
+
+  <div class="carousel-inner">
+    {% for i in book|slice:"0:" %}
+
+    {% if forloop.first %}
+    <div class="carousel-item active  ">
+      <div class="row">
+        {% endif %}
+        <div class="col-sm-3">
+          <div class="thumb-wrapper">
+            <div class="img-box">
+              <div class="book">
+                <div class="book-back book-inner">
+                  <img class="book-image" src="/media/{{i.image}}">
+                </div>
+                <div class="book-image book-pages book-inner"></div>
+                <div class="book-image book-pages book-inner"></div>
+                <div class="book-image book-pages book-inner"></div>
+                <div class="book-image book-pages book-inner"></div>
+                <div class="book-image book-cover book-inner">
+                  <img class="book-image" src="/media/{{i.image}}">
+                </div>
+              </div>
+            </div>
+            <div class="thumb-content">
+              <h4>{{i.book_name}}</h4>
+              <a href="#" class="btn btn-dark">Read Book</a>
+            </div>
+          </div>
+        </div>
+        {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="row">
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+
+  </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators{{forloop.counter}}" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators{{forloop.counter}}" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+{% endfor %}
+
+{% endblock %}
